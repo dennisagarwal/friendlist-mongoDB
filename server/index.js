@@ -1,7 +1,12 @@
 const express = require("express");
 const app = express();
+const cors= require("cors")
 const mongoose = require("mongoose");
 const FriendModel = require("./models/Friends");
+
+app.use(cors())
+//middleware, when we use to get data from front end we need middleware
+app.use(express.json())
 
 /// DATABASE CONNECTION
 mongoose.connect(
@@ -12,10 +17,12 @@ mongoose.connect(
 
 //req we get from front end, res is what we send
 //how to insert data
-app.get("/insert", async (req, res) => {
-  const friend = new FriendModel({ name: "Jessic", age: 38 });
+app.post("/addfriend", async (req, res) => {
+  const name= req.body.name;
+  const age = req.body.age;
+  const friend = new FriendModel({ name: name, age: age });
   await friend.save();
-  res.send("Inserted DATA");
+  res.send("Success");
 });
 
 //how to receive data
