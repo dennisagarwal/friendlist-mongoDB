@@ -12,6 +12,7 @@ function App() {
     axios
       .post("http://localhost:8000/addfriend", { name: name, age: age })
       .then(() => {
+        setlistOfFriends([...listOfFriends,{name:name,age:age}])
         console.log("it worked");
       })
       .catch(() => {
@@ -58,9 +59,13 @@ function App() {
       <div className="listOfFriend">
         {listOfFriends.map((friend) => {
           return (
+            <div className="friendContainer">
             <div className="friend">
               <h3 className="friend__text">Name: {friend.name}</h3>
               <h3 className="friend__text">Age: {friend.age}</h3>
+            </div>
+            <button className="friendContainer__button">Update</button>
+            <button className="friendContainer__button">Delete</button>
             </div>
           );
         })}
