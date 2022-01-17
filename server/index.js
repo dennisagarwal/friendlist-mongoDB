@@ -36,6 +36,27 @@ app.get("/read", async(req,res)=>{
   })
 })
 
+
+app.put("/update", async(req,res)=>{
+  const newAge= req.body.newAge
+  const id= req.body.id
+  try{
+    await FriendModel.findById(id, (error,friendToUpdate)=>{
+      friendToUpdate.age =Number(newAge)
+      friendToUpdate.save()
+    })
+  } catch (err){
+    console.log(err)
+  }
+  res.send("updated");
+})
+
+app.delete("./delete", async(req,res)=>{
+  const id= req.params.id;
+  await FriendModel.findByIdAndRemove(id).exec();
+  res.send("itemdeleted");
+})
+
 app.listen(8000, () => {
   console.log("You are connected 8000");
 });

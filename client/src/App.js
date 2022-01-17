@@ -12,7 +12,7 @@ function App() {
     axios
       .post("http://localhost:8000/addfriend", { name: name, age: age })
       .then(() => {
-        setlistOfFriends([...listOfFriends,{name:name,age:age}])
+        setlistOfFriends([...listOfFriends, { name: name, age: age }]);
         console.log("it worked");
       })
       .catch(() => {
@@ -25,7 +25,7 @@ function App() {
       axios
         .get("http://localhost:8000/read")
         .then((response) => {
-          console.log(response.data)
+          console.log(response.data);
           setlistOfFriends(response.data);
         })
         .catch(() => {
@@ -33,6 +33,17 @@ function App() {
         });
     }
   }, []);
+
+  const updateFriend = (id) => {
+    const newAge = prompt("Enter New Age ! : ");
+    axios.put("http://localhost:8000/update", { newAge: newAge, id: id }).then(()=>{
+setlistOfFriends(listOfFriends.map((val)=>{
+  //val refer to the complete object
+  return val._id==id
+  ?{_id:id, name:val.name, age:newAge}:val
+}))
+    });
+  };
   return (
     <div className="App">
       <div className="inputs">
@@ -60,12 +71,19 @@ function App() {
         {listOfFriends.map((friend) => {
           return (
             <div className="friendContainer">
-            <div className="friend">
-              <h3 className="friend__text">Name: {friend.name}</h3>
-              <h3 className="friend__text">Age: {friend.age}</h3>
-            </div>
-            <button className="friendContainer__button">Update</button>
-            <button className="friendContainer__button">Delete</button>
+              <div className="friend">
+                <h3 className="friend__text">Name: {friend.name}</h3>
+                <h3 className="friend__text">Age: {friend.age}</h3>
+              </div>
+              <button
+                onClick={() => {
+                  updateFriend(friend._id);
+                }}
+                className="friendContainer__button"
+              >
+                Update
+              </button>
+              <button className="friendContainer__button">Delete</button>
             </div>
           );
         })}
