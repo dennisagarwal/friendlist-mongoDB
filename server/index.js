@@ -3,6 +3,7 @@ const app = express();
 const cors= require("cors")
 const mongoose = require("mongoose");
 const FriendModel = require("./models/Friends");
+require("dotenv").config();
 
 app.use(cors())
 //middleware, when we use to get data from front end we need middleware
@@ -22,7 +23,7 @@ app.post("/addfriend", async (req, res) => {
   const age = req.body.age;
   const friend = new FriendModel({ name: name, age: age });
   await friend.save();
-  res.send("Success");
+  res.send(friend);
 });
 
 //how to receive data
@@ -51,7 +52,7 @@ app.put("/update", async(req,res)=>{
   res.send("updated");
 })
 
-app.delete("./delete", async(req,res)=>{
+app.delete("/delete/:id", async(req,res)=>{
   const id= req.params.id;
   await FriendModel.findByIdAndRemove(id).exec();
   res.send("itemdeleted");

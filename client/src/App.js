@@ -11,8 +11,8 @@ function App() {
   const addFriend = () => {
     axios
       .post("http://localhost:8000/addfriend", { name: name, age: age })
-      .then(() => {
-        setlistOfFriends([...listOfFriends, { name: name, age: age }]);
+      .then((response) => {
+        setlistOfFriends([...listOfFriends, { _id:response.data._id, name: name, age: age }]);
         console.log("it worked");
       })
       .catch(() => {
@@ -36,14 +36,30 @@ function App() {
 
   const updateFriend = (id) => {
     const newAge = prompt("Enter New Age ! : ");
-    axios.put("http://localhost:8000/update", { newAge: newAge, id: id }).then(()=>{
-setlistOfFriends(listOfFriends.map((val)=>{
-  //val refer to the complete object
-  return val._id==id
-  ?{_id:id, name:val.name, age:newAge}:val
-}))
-    });
+    axios
+      .put("http://localhost:8000/update", { newAge: newAge, id: id })
+      .then(() => {
+        setlistOfFriends(
+          listOfFriends.map((val) => {
+            //val refer to the complete object
+            return val._id == id
+              ? { _id: id, name: val.name, age: newAge }
+              : val;
+          })
+        );
+      });
   };
+
+  const deleteFriend = (id)=>{
+    axios.delete(`http://localhost:8000/delete/${id} `).then(()=>{
+      setlistOfFriends(
+        listOfFriends.filter((val)=>{
+      return val._id != id
+    })
+    );
+  })
+  }
+
   return (
     <div className="App">
       <div className="inputs">
@@ -83,7 +99,7 @@ setlistOfFriends(listOfFriends.map((val)=>{
               >
                 Update
               </button>
-              <button className="friendContainer__button">Delete</button>
+              <button onClick={()=>{deleteFriend(friend._id)}} className="friendContainer__button">Delete</button>
             </div>
           );
         })}
