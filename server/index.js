@@ -11,7 +11,7 @@ app.use(express.json())
 
 /// DATABASE CONNECTION
 mongoose.connect(
-  "mongodb://localhost:27017/tutorialmern?readPreference=primary&appname=MongoDB%20Compass&ssl=false",
+  "mongodb+srv://deepakagarwal:password1234@mern.ccrii.mongodb.net/tutorialmern",
   { useNewUrlParser: true }
 );
 
@@ -58,6 +58,11 @@ app.delete("/delete/:id", async(req,res)=>{
   res.send("itemdeleted");
 })
 
-app.listen(8000, () => {
+app.listen(process.env.PORT || 8000, () => {
   console.log("You are connected 8000");
 });
+
+
+// app.listen(8000, () => {
+//   console.log("You are connected 8000");
+// });
