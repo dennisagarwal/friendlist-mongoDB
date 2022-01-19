@@ -3,9 +3,10 @@
 - Fully understood and implemented React fundamentals, react hook.
 - Implemented the basics of Node.js.
 - Used Semantic HTML.
-- Flexbox, SASS.
+- Flexbox.
 - Heroku
-- MySQL Databse
+- Atlas
+- MongoDB Databse
 - Netlify
 
 ## Installation
