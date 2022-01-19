@@ -48,9 +48,8 @@ $ node index.js (on server side)
 - HTML.
 - Flexbox.
 - MongoDB
-  -Atlas
+- Atlas
 - Heroku
-- MySQL
 - Netlify
 
 #### Website Glimpse
